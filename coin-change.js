@@ -16,13 +16,6 @@ Explanation: 11 = 5 + 5 + 1
 
 
 var coinChange = function(coins, amount) {
-    // edge cases
-    // sort array
-    //  return -1 if cannot make up money
-    // return 0 if the amount of 0
-    // take the highest amount of coins and subtract from the amount
-    // if the amount if still higher than the highest coin, do it again continully do it 
-    // once it is lower than that highest amount, slice off the highest amount and continually check to see until value is 0
 
     let sortedCoins = [...coins].sort((a, b) => a - b);
     let counter = 0;
@@ -48,3 +41,4 @@ var coinChange = function(coins, amount) {
 };
 
 console.log(coinChange([1,2,5], 11));
+console.log(coinChange([1,2,5], 12));
