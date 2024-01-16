@@ -56,77 +56,77 @@ n = 7
 
  */
 
-const logs = ["30 99 sign-in", "30 105 sign-out", "12 100 sign-in", "20 80 sign-in", "12 120 sign-out", "20 101 sign-out", "21 110 sign-in"]
-const moreLogs = ["99 1 sign-in","100 10 sign-in","50 20 sign-in","100 15 sign-out","50 26 sign-out","99 2 sign-out"]
-const maxSpan = 20
+// const logs = ["30 99 sign-in", "30 105 sign-out", "12 100 sign-in", "20 80 sign-in", "12 120 sign-out", "20 101 sign-out", "21 110 sign-in"]
+// const moreLogs = ["99 1 sign-in","100 10 sign-in","50 20 sign-in","100 15 sign-out","50 26 sign-out","99 2 sign-out"]
+// const maxSpan = 20
 
-// function processLogs(logs, maxSpan) {
-//     let fullLogs = [];
-
-//     let result = [];
-
-//     for (let i = 0; i < logs.length; i++) {
-//        fullLogs.push(logs[i].split(' '))
-//     }
-//     let obj = {};
-
-//     fullLogs.forEach((el) => {
-//         if(!obj[el[0]]){
-//             obj[el[0]] = [el];
-//         }else{
-//             obj[el[0]].push(el);
-//         }
-//     })
-
-//     for(const key in obj){
-//         if(obj[key].length < 2){
-//             delete obj[key];
-//         }
-//     }
- 
-
-//     for(const key in obj){
-//         // console.log(obj[key][1][1])
-//         if(Math.abs(obj[key][0][1] - obj[key][1][1]) <= maxSpan){
-//             result.push(key)
-//         }
-//     }
-    
-//     return result
-
-// }
 function processLogs(logs, maxSpan) {
-    const userLogs = {};
+    let fullLogs = [];
 
-    // Grouping logs by user_id
-    logs.forEach(log => {
-        const user = log.split(' ');
-       
-        if (!userLogs[user[0]]) {
-            userLogs[user[0]] = {};
+    let result = [];
+
+    for (let i = 0; i < logs.length; i++) {
+       fullLogs.push(logs[i].split(' '))
+    }
+    let obj = {};
+
+    fullLogs.forEach((el) => {
+        if(!obj[el[0]]){
+            obj[el[0]] = [el];
+        }else{
+            obj[el[0]].push(el);
         }
-        userLogs[user[0]][user[2]] = parseInt(user[1]);
-    });
+    })
 
-    // console.log(userLogs)
-    const result = [];
-
-    // Processing each user's sign-in and sign-out
-    for (const key in userLogs) {
-        if (userLogs[key]['sign-in'] && userLogs[key]['sign-out']) {
-            const signInTime = userLogs[key]['sign-in'];
-            const signOutTime = userLogs[key]['sign-out'];
-            
-            if (signOutTime - signInTime <= maxSpan) {
-                result.push(key);
-            }
+    for(const key in obj){
+        if(obj[key].length < 2){
+            delete obj[key];
         }
     }
+ 
 
-    return result;
+    for(const key in obj){
+        // console.log(obj[key][1][1])
+        if(Math.abs(obj[key][0][1] - obj[key][1][1]) <= maxSpan){
+            result.push(key)
+        }
+    }
+    
+    return result
+
 }
+// function processLogs(logs, maxSpan) {
+//     const userLogs = {};
 
-console.log(processLogs(logs, maxSpan))
+
+//     logs.forEach(log => {
+//         const user = log.split(' ');
+       
+//         if (!userLogs[user[0]]) {
+//             userLogs[user[0]] = {};
+//         }
+//         userLogs[user[0]][user[2]] = parseInt(user[1]);
+//     });
+
+
+//     const result = [];
+
+
+//     for (const key in userLogs) {
+//         if (userLogs[key]['sign-in'] && userLogs[key]['sign-out']) {
+//             const signInTime = userLogs[key]['sign-in'];
+//             const signOutTime = userLogs[key]['sign-out'];
+            
+//             if (signOutTime - signInTime <= maxSpan) {
+//                 result.push(key);
+//             }
+//         }
+//     }
+
+//     return result;
+// }
+
+// console.log(processLogs(logs, maxSpan))
 // console.log(processLogs(moreLogs, 5))
 
 // {
